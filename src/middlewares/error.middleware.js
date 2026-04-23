@@ -10,4 +10,18 @@
  */
 export function errorHandler(error, req, res, next) {
   // Your code here
+  if (error.name === "ValidationError") {
+    res.status(400).json({
+      error: { message: error.message },
+    });
+  }
+  if (error.code === 11000) {
+    res.status(409).json({
+      error: { message: "Email already exists" },
+    });
+  }
+  res.status(500).json({
+    error: { message: error.message },
+  });
+
 }
